@@ -64,4 +64,21 @@ class TarefasService {
       throw Exception("Problemas ao excluir a tarefa: $err");
     }
   }
+
+  Future<bool> update(String id, Tarefa tarefa) async {
+    try {
+      String json = jsonEncode(tarefa.toJson());
+      Response response = await _tarefasRepository.update(id, json);
+
+      if (response.statusCode == 200) {
+        // Sucesso na requisição
+        return true;
+      } else {
+        // Erro na requisição
+        throw Exception("Erro ao atualizar a tarefa: ${response.statusCode}");
+      }
+    } catch (err) {
+      throw Exception("Problemas ao atualizar a tarefa: $err");
+    }
+  }
 }

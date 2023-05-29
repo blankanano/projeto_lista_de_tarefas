@@ -1,8 +1,9 @@
 import 'package:projeto_lista_de_tarefas/models/tarefa.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_lista_de_tarefas/services/tarefas_service.dart';
-
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import '../functions/funcoes_padrao.dart';
+import 'package:intl/intl.dart';
 
 class TarefaInsertScreen extends StatefulWidget {
   const TarefaInsertScreen({super.key});
@@ -13,7 +14,7 @@ class TarefaInsertScreen extends StatefulWidget {
 
 class _TarefaInsertScreenState extends State<TarefaInsertScreen> {
   final _nome = TextEditingController();
-  final _dataHora = TextEditingController();
+  DateTime _dataHora = DateTime.now();
   final _localizacao = TextEditingController();
 
   final tarefasService = TarefasService();
@@ -42,24 +43,41 @@ class _TarefaInsertScreenState extends State<TarefaInsertScreen> {
                 labelText: "Nome",
               ),
             ),
-            TextField(
-              controller: _dataHora,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Data",
+            TextButton(
+              onPressed: () {
+                DatePicker.showDateTimePicker(
+                  context,
+                  showTitleActions: true,
+                  onConfirm: (dateTime) {
+                    setState(() {
+                      _dataHora = dateTime;
+                    });
+                  },
+                  currentTime: _dataHora ?? DateTime.now(),
+                );
+              },
+              child: Text(
+                _dataHora != null
+                    ? DateFormat('dd/MM/yyyy hh:mm').format(_dataHora)
+                    : 'Selecione a Data e Hora',
+                style: TextStyle(color: Colors.blue),
               ),
             ),
             TextField(
+              readOnly: true,
+              maxLines: null, // Ajusta automaticamente o número de linhas
               controller: _localizacao,
-              decoration: const InputDecoration(
-                labelText: "Localização",
+              style: TextStyle(fontSize: 20.0),
+              decoration: InputDecoration(
+                labelText: 'Localização',
+                border: OutlineInputBorder(),
               ),
             ),
             ElevatedButton(
               onPressed: () {
                 Tarefa tarefa = Tarefa(
                   _nome.text,
-                  _dataHora.text,
+                  _dataHora,
                   _localizacao.text,
                 );
                 tarefasService.insert(tarefa);

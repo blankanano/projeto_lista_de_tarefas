@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_lista_de_tarefas/models/tarefa.dart';
+import 'package:intl/intl.dart';
 
 class TarefaShowScreen extends StatelessWidget {
   const TarefaShowScreen({super.key});
@@ -10,22 +11,42 @@ class TarefaShowScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(tarefa.nome),
+        title: Text('Consulta'),
       ),
-      body: Column(
+      body: ListView(
+        padding: EdgeInsets.all(16.0),
         children: [
-          Text(
-            tarefa.nome,
-            style: const TextStyle(fontSize: 20.0),
+          TextFormField(
+            initialValue: tarefa.nome,
+            readOnly: true,
+            style: TextStyle(fontSize: 20.0),
+            decoration: InputDecoration(
+              labelText: 'Nome',
+              border: OutlineInputBorder(),
+            ),
           ),
-          Text(
-            tarefa.dataHora,
-            style: const TextStyle(fontSize: 20.0),
+          SizedBox(height: 16.0),
+          TextFormField(
+            initialValue:
+                DateFormat('dd/MM/yyyy HH:mm').format(tarefa.dataHora),
+            readOnly: true,
+            style: TextStyle(fontSize: 20.0),
+            decoration: InputDecoration(
+              labelText: 'Data e Hora',
+              border: OutlineInputBorder(),
+            ),
           ),
-          Text(
-            tarefa.localizacao,
-            style: const TextStyle(fontSize: 20.0),
-          )
+          SizedBox(height: 16.0),
+          TextField(
+            readOnly: true,
+            maxLines: null, // Ajusta automaticamente o número de linhas
+            controller: TextEditingController(text: tarefa.localizacao),
+            style: TextStyle(fontSize: 20.0),
+            decoration: InputDecoration(
+              labelText: 'Localização',
+              border: OutlineInputBorder(),
+            ),
+          ),
         ],
       ),
     );

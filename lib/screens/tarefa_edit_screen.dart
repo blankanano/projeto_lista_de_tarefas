@@ -2,6 +2,7 @@ import 'package:projeto_lista_de_tarefas/models/tarefa.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_lista_de_tarefas/services/tarefas_service.dart';
 import 'package:projeto_lista_de_tarefas/functions/funcoes_padrao.dart';
+import 'package:intl/intl.dart';
 
 class TarefaEditScreen extends StatefulWidget {
   const TarefaEditScreen({super.key});
@@ -12,7 +13,7 @@ class TarefaEditScreen extends StatefulWidget {
 
 class _TarefaEditScreenState extends State<TarefaEditScreen> {
   final _nome = TextEditingController();
-  final _dataHora = TextEditingController();
+  DateTime _dataHora = DateTime.now();
   final _localizacao = TextEditingController();
 
   final tarefasService = TarefasService();
@@ -27,13 +28,21 @@ class _TarefaEditScreenState extends State<TarefaEditScreen> {
   }
 
   @override
+  void dispose() {
+    _nome.dispose();
+    _localizacao.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Tarefa tarefa = ModalRoute.of(context)?.settings.arguments as Tarefa;
 
     if (tarefa != null) {
       _nome.text = tarefa.nome;
-      _dataHora.text = tarefa.dataHora;
+      _dataHora = tarefa.dataHora;
     }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edição"),
@@ -48,27 +57,34 @@ class _TarefaEditScreenState extends State<TarefaEditScreen> {
                 labelText: "Nome",
               ),
             ),
-            TextField(
-              controller: _dataHora,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Data",
+            TextButton(
+              onPressed: () {
+                showDateTimePicker();
+              },
+              child: Text(
+                _dataHora != null
+                    ? DateFormat('dd/MM/yyyy HH:mm').format(_dataHora)
+                    : 'Selecione a Data e Hora',
+                style: TextStyle(color: Colors.blue),
               ),
             ),
             TextField(
-              controller: _localizacao,
-              decoration: const InputDecoration(
-                labelText: "Localização",
+              readOnly: true,
+              maxLines: null, // Ajusta automaticamente o número de linhas
+              controller: TextEditingController(text: tarefa.localizacao),
+              style: TextStyle(fontSize: 20.0),
+              decoration: InputDecoration(
+                labelText: 'Localização',
+                border: OutlineInputBorder(),
               ),
             ),
             ElevatedButton(
               onPressed: () {
-                Tarefa tarefa = Tarefa(
-                  _nome.text,
-                  _dataHora.text,
-                  _localizacao.text,
-                );
-                tarefasService.insert(tarefa);
+                tarefa.nome = _nome.text;
+                tarefa.dataHora = _dataHora;
+                tarefa.localizacao = _localizacao.text;
+
+                tarefasService.update(tarefa.id.toString(), tarefa);
               },
               child: const Text("Salvar"),
             ),
@@ -76,5 +92,33 @@ class _TarefaEditScreenState extends State<TarefaEditScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> showDateTimePicker() async {
+    final pickedDateTime = await showDatePicker(
+      context: context,
+      initialDate: _dataHora != null ? _dataHora : DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (pickedDateTime != null) {
+      final pickedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.fromDateTime(
+          _dataHora != null ? _dataHora : DateTime.now(),
+        ),
+      );
+
+      if (pickedTime != null) {
+        _dataHora = DateTime(
+          pickedDateTime.year,
+          pickedDateTime.month,
+          pickedDateTime.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+      }
+    }
   }
 }

@@ -18,35 +18,27 @@ class _TarefaListScreenState extends State<TarefaListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Lista de Tarefas - Flutter"),
+        title: const Text("Lista de Tarefas - Trabalho de Flutter"),
       ),
       body: ChangeNotifierProvider(
         create: (context) => TarefasProvider(),
         child: Column(
           children: const [
-            TarefaOverviewCard(),
+            // TarefaOverviewCard(),
             TarefaList(),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context).pushNamed(RoutePaths.TAREFAINSERTSCREEN);
-        },
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: () {
+            Navigator.of(context).pushNamed(RoutePaths.TAREFAINSERTSCREEN);
+          },
+        ),
       ),
-
-      // floatingActionButton: Padding(
-      //   padding: const EdgeInsets.all(16.0),
-      //   child: FloatingActionButton(
-      //     child: const Icon(Icons.add),
-      //     onPressed: () {
-      //       print('Entrou na tela de insert');
-      //       Navigator.of(context).pushNamed(RoutePaths.TAREFAINSERTSCREEN);
-      //     },
-      //   ),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
