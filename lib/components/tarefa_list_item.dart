@@ -25,7 +25,7 @@ class TarefaListItem extends StatelessWidget {
   //     ),
   //     onTap: () {
   //       Navigator.of(context)
-  //           .pushNamed(RoutePaths.TAREFASHOWSCREEN, arguments: tarefa);
+  //           .pushNamed(RoutePaths.TAREFA_SHOW_SCREEN, arguments: tarefa);
   //       _tarefasProvider
   //           .refreshTarefas(); // Atualiza a lista após retornar da tela de detalhes
   //     },
@@ -46,7 +46,7 @@ class TarefaListItem extends StatelessWidget {
             icon: const Icon(Icons.edit),
             onPressed: () {
               Navigator.of(context)
-                  .pushNamed(RoutePaths.TAREFAEDITSCREEN, arguments: tarefa)
+                  .pushNamed(RoutePaths.TAREFA_EDIT_SCREEN, arguments: tarefa)
                   .then((_) {
                 // Atualiza a lista após retornar da tela de edição
                 _tarefasProvider.refreshTarefas();
@@ -73,7 +73,6 @@ class TarefaListItem extends StatelessWidget {
                         child: Text('Excluir'),
                         onPressed: () {
                           _tarefasProvider.deleteTarefa(tarefa);
-                          Navigator.of(context).pop();
                           // Atualiza a lista após excluir a tarefa
                           _tarefasProvider.refreshTarefas();
                         },
@@ -88,7 +87,7 @@ class TarefaListItem extends StatelessWidget {
       ),
       onTap: () {
         Navigator.of(context)
-            .pushNamed(RoutePaths.TAREFASHOWSCREEN, arguments: tarefa)
+            .pushNamed(RoutePaths.TAREFA_SHOW_SCREEN, arguments: tarefa)
             .then((_) {
           // Atualiza a lista após retornar da tela de detalhes
           _tarefasProvider.refreshTarefas();
