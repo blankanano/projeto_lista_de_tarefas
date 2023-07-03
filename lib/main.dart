@@ -6,11 +6,11 @@ import 'package:projeto_lista_de_tarefas/screens/tarefa_insert_screen.dart';
 import 'package:projeto_lista_de_tarefas/screens/tarefa_show_screen.dart';
 import 'package:projeto_lista_de_tarefas/screens/tarefa_list_screen.dart';
 
-//import 'package:consultor_tarefas_pk/consultor_tarefas_pk.dart';
+import 'package:consultor_tarefas_pk/consultor_tarefas_pk.dart';
 
 void main() {
-  /*final Calculator calculator = Calculator();
-  print(calculator.addOne(1));*/
+  final Calculator calculator = Calculator();
+  print(calculator.addOne(1));
 
   runApp(App());
 }

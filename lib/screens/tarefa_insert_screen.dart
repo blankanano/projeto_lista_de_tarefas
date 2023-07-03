@@ -42,6 +42,8 @@ class _TarefaInsertScreenState extends State<TarefaInsertScreen> {
               decoration: const InputDecoration(
                 labelText: "Nome",
               ),
+              maxLength: 50,
+              //maxLengthEnforcement: MaxLengthEnforcement.enforced,
             ),
             TextButton(
               onPressed: () {
