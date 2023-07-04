@@ -1,9 +1,10 @@
-import 'package:projeto_lista_de_tarefas/models/tarefa.dart';
+//import 'package:projeto_lista_de_tarefas/models/tarefa.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_lista_de_tarefas/services/tarefas_service.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import '../functions/funcoes_padrao.dart';
 import 'package:intl/intl.dart';
+import 'package:consultor_tarefas_pk/consultor_tarefas_pk.dart';
 
 class TarefaInsertScreen extends StatefulWidget {
   const TarefaInsertScreen({super.key});

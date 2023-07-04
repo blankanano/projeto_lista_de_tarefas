@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-import 'package:projeto_lista_de_tarefas/models/tarefa.dart';
+//import 'package:projeto_lista_de_tarefas/models/tarefa.dart';
 import 'package:projeto_lista_de_tarefas/repositories/tarefas_repository.dart';
 import 'package:http/http.dart';
+import 'package:consultor_tarefas_pk/consultor_tarefas_pk.dart';
 
 class TarefasService {
   final TarefasRepository _tarefasRepository = TarefasRepository();

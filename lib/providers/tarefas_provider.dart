@@ -1,7 +1,8 @@
 import 'package:projeto_lista_de_tarefas/services/tarefas_service.dart';
 import 'package:flutter/material.dart';
 
-import '../models/tarefa.dart';
+//import '../models/tarefa.dart';
+import 'package:consultor_tarefas_pk/consultor_tarefas_pk.dart';
 
 class TarefasProvider with ChangeNotifier {
   List<Tarefa> tarefas = [];
@@ -14,16 +15,17 @@ class TarefasProvider with ChangeNotifier {
     return tarefas;
   }
 
-  int countItens() => tarefas.fold(0, (acc, p) => acc);
-
-  void deleteTarefa(Tarefa tarefa) async {
+  void deleteTarefa(Tarefa tarefa) {
     String idTarefa = tarefa.id.toString();
 
-    bool isDeleted = await TarefasService().delete(idTarefa);
-    if (isDeleted) {
-      tarefas.remove(tarefa);
-      notifyListeners();
-    }
+    TarefasService().delete(idTarefa).then((isDeleted) {
+      if (isDeleted) {
+        tarefas.remove(tarefa);
+        notifyListeners();
+      }
+    }).catchError((error) {
+      print('Erro ao excluir a tarefa: $error');
+    });
   }
 
   Future<void> refreshTarefas() async {
@@ -32,6 +34,8 @@ class TarefasProvider with ChangeNotifier {
       List<Tarefa> tarefas = await TarefasService().list();
       // Atualize a lista de tarefas no provider
       _tarefas = tarefas;
+
+      await Future.delayed(const Duration(milliseconds: 100));
       // Notifique os ouvintes (widgets dependentes) que os dados foram atualizados
       notifyListeners();
     } catch (error) {

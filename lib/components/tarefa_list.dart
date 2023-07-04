@@ -3,8 +3,9 @@ import 'package:projeto_lista_de_tarefas/providers/tarefas_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/tarefa.dart';
+//import '../models/tarefa.dart';
 import '../services/tarefas_service.dart';
+import 'package:consultor_tarefas_pk/consultor_tarefas_pk.dart';
 
 class TarefaList extends StatelessWidget {
   const TarefaList({super.key});

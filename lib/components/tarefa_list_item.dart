@@ -1,9 +1,10 @@
-import 'package:projeto_lista_de_tarefas/models/tarefa.dart';
+//import 'package:projeto_lista_de_tarefas/models/tarefa.dart';
 import 'package:projeto_lista_de_tarefas/providers/tarefas_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../routes/route_paths.dart';
 import 'package:intl/intl.dart';
+import 'package:consultor_tarefas_pk/consultor_tarefas_pk.dart';
 
 class TarefaListItem extends StatelessWidget {
   const TarefaListItem(
@@ -12,25 +13,6 @@ class TarefaListItem extends StatelessWidget {
   });
 
   final Tarefa tarefa;
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   final _tarefasProvider = Provider.of<TarefasProvider>(context);
-  //   return ListTile(
-  //     title: Text(tarefa.nome),
-  //     subtitle: Text(tarefa.dataHora),
-  //     trailing: IconButton(
-  //       icon: const Icon(Icons.delete),
-  //       onPressed: () => _tarefasProvider.deleteTarefa(tarefa),
-  //     ),
-  //     onTap: () {
-  //       Navigator.of(context)
-  //           .pushNamed(RoutePaths.TAREFA_SHOW_SCREEN, arguments: tarefa);
-  //       _tarefasProvider
-  //           .refreshTarefas(); // Atualiza a lista após retornar da tela de detalhes
-  //     },
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +55,7 @@ class TarefaListItem extends StatelessWidget {
                         child: Text('Excluir'),
                         onPressed: () {
                           _tarefasProvider.deleteTarefa(tarefa);
-                          // Atualiza a lista após excluir a tarefa
-                          _tarefasProvider.refreshTarefas();
+                          Navigator.of(context).pop();
                         },
                       ),
                     ],

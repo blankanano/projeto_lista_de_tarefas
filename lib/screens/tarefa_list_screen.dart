@@ -4,7 +4,6 @@ import 'package:projeto_lista_de_tarefas/routes/route_paths.dart';
 import 'package:provider/provider.dart';
 
 import '../components/tarefa_list.dart';
-import '../components/tarefa_overview_card.dart';
 
 class TarefaListScreen extends StatefulWidget {
   TarefaListScreen({super.key});
@@ -20,11 +19,18 @@ class _TarefaListScreenState extends State<TarefaListScreen> {
       create: (context) => TarefasProvider(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Lista de Tarefas - Trabalho de Flutter"),
+          title: const Text("Lista de Tarefas - Melhorada"),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context)
+                  .pushNamed(RoutePaths.SIGN_IN_SCREEN)
+                  .then((_) {});
+            },
+          ),
         ),
         body: Column(
           children: const [
-            // TarefaOverviewCard(),
             TarefaList(),
           ],
         ),
@@ -39,7 +45,8 @@ class _TarefaListScreenState extends State<TarefaListScreen> {
                       .pushNamed(RoutePaths.TAREFA_INSERT_SCREEN)
                       .then((_) {
                     // Atualiza a lista após retornar da tela de detalhes
-                    value.refreshTarefas();
+                    Provider.of<TarefasProvider>(context, listen: false)
+                        .refreshTarefas();
                   });
                 },
               );

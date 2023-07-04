@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_lista_de_tarefas/models/tarefa.dart';
+//import 'package:projeto_lista_de_tarefas/models/tarefa.dart';
 import 'package:intl/intl.dart';
+import 'package:consultor_tarefas_pk/consultor_tarefas_pk.dart';
 
 class TarefaShowScreen extends StatelessWidget {
   const TarefaShowScreen({super.key});
