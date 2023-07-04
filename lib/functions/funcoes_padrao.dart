@@ -2,8 +2,6 @@ import 'package:location/location.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-String APIKey = "774efa6e0fdb438ea42231015230304";
-
 Future<String> getLocation() async {
   Location location = Location();
   bool serviceEnabled;
